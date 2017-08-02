@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/TvRecyclerView.iml" filepath="$PROJECT_DIR$/TvRecyclerView.iml" />
+      <module fileurl="file://$PROJECT_DIR$/tvview/tvview.iml" filepath="$PROJECT_DIR$/tvview/tvview.iml" />
+    </modules>
+  </component>
+</project>
