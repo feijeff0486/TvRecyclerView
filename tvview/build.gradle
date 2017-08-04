@@ -45,7 +45,7 @@ dependencies {
 //项目主页
 def siteUrl = 'https://bintray.com/goghtsui/center-scrollview'
 //项目的git地址
-def gitUrl = ''
+def gitUrl = 'git@github.com:goghtsui/TvRecyclerView.git'
 // 上传到 Bintray 的 package 名称
 def libName = "CenterScrollview"
 group = "com.gogh";

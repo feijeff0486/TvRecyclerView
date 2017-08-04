@@ -1565,14 +1565,6 @@ public class CenterScrollVie extends FrameLayout implements NestedScrollingParen
         return scrollYDelta;
     }
 
-    /**
-     * 计算焦点view移动到屏幕中间位置Y轴的偏移量
-     *
-     * @param focusView 焦点view
-     * @author 高晓峰
-     * @date 7/24/2017
-     * @ChangeLog: <li> 高晓峰 on 7/24/2017 </li>
-     */
     private int getMoveToCenterOffset(View focusView) {
         if (focusView == null) {
             return 0;

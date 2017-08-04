@@ -1,0 +1,48 @@
+ext {
+
+    // 版本管理
+    version_const = [
+            versionCode: 1,
+            versionName: "1.0.01"
+    ]
+
+    // 测试框架
+    testCompile = [
+            "group" : 'com.android.support',
+            "module": 'support-annotations'
+    ]
+
+    // 依赖库版本
+    dep_version = [
+            junit          : "4.12",
+            rxjava         : "1.1.6",
+            retrofit       : "2.1.0",
+            dagger2        : "2.0",
+            jsr250_api     : "1.0",
+            okhttp         : "3.5.0",
+            rxandroid      : "1.2.1",
+            dagger_compiler: "2.0",
+            adapter_rxjava : "2.1.0",
+            espresso_core  : "2.2.2",
+            converter_gson : "2.1.0",
+            appcompatv7    : "25.3.0"
+    ]
+
+    // 依赖库
+    dependencies = [
+            "junit"                    : 'junit:junit:' + dep_version.junit,
+            "rxjava"                   : 'io.reactivex:rxjava:' + dep_version.rxjava,
+            "rxandroid"                : 'io.reactivex:rxandroid:' + dep_version.rxandroid,
+            "retrofit"                 : 'com.squareup.retrofit2:retrofit:' + dep_version.retrofit,
+            "dagger2"                  : 'com.google.dagger:dagger:' + dep_version.dagger2,
+            "okhttp"                   : 'com.squareup.okhttp3:okhttp:' + dep_version.okhttp,
+            "jsr250_api"               : 'javax.annotation:jsr250-api:' + dep_version.jsr250_api,
+            "appcompatv7"              : 'com.android.support:appcompat-v7:' + dep_version.appcompatv7,
+            "adapter_rxjava"           : 'com.squareup.retrofit2:adapter-rxjava:' + dep_version.adapter_rxjava,
+            "dagger_compiler"          : 'com.google.dagger:dagger-compiler:' + dep_version.dagger_compiler,
+            "converter_gson"           : 'com.squareup.retrofit2:converter-gson:' + dep_version.converter_gson,
+            "espresso_core"            : 'com.android.support.test.espresso:espresso-core:' + dep_version.espresso_core,
+            "testInstrumentationRunner": 'android.support.test.runner.AndroidJUnitRunner'
+    ]
+
+}

@@ -3,7 +3,7 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/TvRecyclerView.iml" filepath="$PROJECT_DIR$/TvRecyclerView.iml" />
-      <module fileurl="file://$PROJECT_DIR$/tvview/tvview.iml" filepath="$PROJECT_DIR$/tvview/tvview.iml" />
+      <module fileurl="file://$PROJECT_DIR$/rxokretrofit/rxokretrofit.iml" filepath="$PROJECT_DIR$/rxokretrofit/rxokretrofit.iml" />
     </modules>
   </component>
 </project>

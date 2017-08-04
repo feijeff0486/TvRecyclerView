@@ -7,7 +7,6 @@
 /build
 /captures
 .externalNativeBuild
-!/local.properties
 /build/
 /tvview/build/
 !/tvview/tvview.iml
