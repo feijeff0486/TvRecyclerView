@@ -71,6 +71,7 @@ install {
                     }
                 }
 
+
                 //填写开发者基本信息，复制我的，这里需要修改。
                 developers {
                     developer {
@@ -118,6 +119,8 @@ task sourcesJar(type: Jar) {
 }
 // 生成jarDoc的task，不需要修改。
 task javadoc(type: Javadoc) {
+    options.encoding "UTF-8"
+    options.charSet 'UTF-8'
     source = android.sourceSets.main.java.srcDirs
     classpath += project.files(android.getBootClasspath().join(File.pathSeparator))
     // destinationDir = file("../javadoc/")
