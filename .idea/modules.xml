@@ -4,6 +4,7 @@
     <modules>
       <module fileurl="file://$PROJECT_DIR$/TvRecyclerView.iml" filepath="$PROJECT_DIR$/TvRecyclerView.iml" />
       <module fileurl="file://$PROJECT_DIR$/rxokretrofit/rxokretrofit.iml" filepath="$PROJECT_DIR$/rxokretrofit/rxokretrofit.iml" />
+      <module fileurl="file://$PROJECT_DIR$/tvview/tvview.iml" filepath="$PROJECT_DIR$/tvview/tvview.iml" />
     </modules>
   </component>
 </project>
