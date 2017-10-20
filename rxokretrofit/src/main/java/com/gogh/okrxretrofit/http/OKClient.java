@@ -5,6 +5,7 @@ import android.support.annotation.Nullable;
 
 import com.gogh.okrxretrofit.conf.Property;
 import com.gogh.okrxretrofit.conf.TimeOut;
+import com.gogh.okrxretrofit.util.Logger;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -12,6 +13,7 @@ import java.util.concurrent.TimeUnit;
 
 import okhttp3.Request;
 import okhttp3.Response;
+import okhttp3.logging.HttpLoggingInterceptor;
 
 /**
  * Copyright (c) 2016 All rights reserved by gaoxiaofeng
@@ -22,7 +24,7 @@ import okhttp3.Response;
  */
 class OKClient {
 
-    private static OKClient INSTANCE;
+    private static final String TAG = "OKClient";
 
     @Nullable
     private List<Property> properties;
@@ -33,16 +35,12 @@ class OKClient {
     private OKClient() {
     }
 
-    protected static OKClient newInstance() {
-        if (null == INSTANCE) {
-            INSTANCE = SingleHolder.CLIENT;
-        }
-        return INSTANCE;
+    protected static OKClient get() {
+        return SingleHolder.CLIENT;
     }
 
     @NonNull
     protected okhttp3.OkHttpClient build(@Nullable Builder builder) {
-
         if (null != builder) {
             if(builder.timeOut == null){
                 timeOut = new TimeOut();
@@ -52,6 +50,16 @@ class OKClient {
 
             this.properties = builder.properties;
         }
+
+        HttpLoggingInterceptor.Level level = HttpLoggingInterceptor.Level.BODY;
+
+        HttpLoggingInterceptor loggingInterceptor = new HttpLoggingInterceptor(new HttpLoggingInterceptor.Logger() {
+            @Override
+            public void log(String message) {
+                Logger.debug(TAG, "OkHttp message : " + message);
+            }
+        });
+        loggingInterceptor.setLevel(level);
 
         okhttp3.OkHttpClient.Builder httpClient = new okhttp3.OkHttpClient.Builder();
 
@@ -73,6 +81,7 @@ class OKClient {
                     Response response = chain.proceed(request);
                     return response;
                 })
+                .addInterceptor(loggingInterceptor)
                 .connectTimeout(timeOut.getConnectTimeout(), TimeUnit.SECONDS)
                 .writeTimeout(timeOut.getWriteTimeout(), TimeUnit.SECONDS)
                 .readTimeout(timeOut.getReadTimeout(), TimeUnit.SECONDS);
@@ -122,7 +131,7 @@ class OKClient {
 
         @NonNull
         okhttp3.OkHttpClient build() {
-            return OKClient.newInstance().build(this);
+            return OKClient.get().build(this);
         }
     }
 

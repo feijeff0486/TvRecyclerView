@@ -7,8 +7,6 @@ import com.gogh.okrxretrofit.HttpClient;
 import com.gogh.okrxretrofit.component.DaggerHttpComponent;
 import com.gogh.okrxretrofit.conf.TimeOut;
 import com.gogh.okrxretrofit.http.HttpModule;
-import com.gogh.okrxretrofit.request.OnResponseListener;
-import com.gogh.okrxretrofit.request.Request;
 
 import retrofit2.converter.gson.GsonConverterFactory;
 
@@ -18,6 +16,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
         HttpModule httpModule = new HttpModule.Builder()
                 .baseUrl("")
                 .factory(GsonConverterFactory.create())
@@ -25,7 +24,7 @@ public class MainActivity extends AppCompatActivity {
                 .build();
         DaggerHttpComponent.builder().httpModule(httpModule).build().inject(HttpClient.newInstance());
 
-        RequestApi requestApi = HttpClient.newInstance().getRequestApi(RequestApi.class);
+        /*RequestApi requestApi = HttpClient.newInstance().getRequestApi(RequestApi.class);
         Request.newInstance().request(requestApi.getEntity(), new OnResponseListener<Entity>() {
             @Override
             public void onCompleted() {
@@ -41,7 +40,7 @@ public class MainActivity extends AppCompatActivity {
             public void onNext(Entity o) {
 
             }
-        });
+        });*/
 
     }
 

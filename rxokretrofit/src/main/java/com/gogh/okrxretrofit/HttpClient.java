@@ -16,9 +16,6 @@ import retrofit2.Retrofit;
  */
 public class HttpClient {
 
-    @NonNull
-    private static HttpClient INSTANCE = new HttpClient();
-
     @Inject
     OkHttpClient okHttpClient;
 
@@ -30,10 +27,7 @@ public class HttpClient {
 
     @NonNull
     public static HttpClient newInstance() {
-        if (null == INSTANCE) {
-            INSTANCE = SingleHolder.TASK;
-        }
-        return INSTANCE;
+        return SingleHolder.TASK;
     }
 
     public <T> T getRequestApi(Class<T> service) {

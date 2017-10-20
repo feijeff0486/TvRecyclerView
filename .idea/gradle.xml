@@ -9,7 +9,6 @@
           <set>
             <option value="$PROJECT_DIR$" />
             <option value="$PROJECT_DIR$/rxokretrofit" />
-            <option value="$PROJECT_DIR$/tvview" />
           </set>
         </option>
         <option name="resolveModulePerSourceSet" value="false" />

@@ -15,13 +15,8 @@ import rx.schedulers.Schedulers;
 
 public class Request<T> {
 
-    private static Request INSTANCE;
-
-    public static Request newInstance() {
-        if (INSTANCE == null) {
-            INSTANCE = SingleHolder.HOLDER;
-        }
-        return INSTANCE;
+    public static Request get() {
+        return SingleHolder.HOLDER;
     }
 
     public void request(Observable<T> observable, OnResponseListener<T> onResponseListener) {
