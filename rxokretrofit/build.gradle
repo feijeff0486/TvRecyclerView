@@ -1,36 +1,24 @@
+String moduleName = project.name
 apply plugin: 'com.android.library'
-apply plugin: 'me.tatarka.retrolambda'
-apply plugin: 'com.neenbedankt.android-apt'
-
-// 2. 添加这两行
-apply plugin: 'com.github.dcendents.android-maven'
-apply plugin: 'com.jfrog.bintray'
-
+ext{
+    libraryVersionCode = 5
+    libraryVersionName = "1.0.5"
+}
 android {
-    compileSdkVersion COMPILE_SDK as int
-    buildToolsVersion BUILDTOOLS_VERSION
-
-    aaptOptions {
-        cruncherEnabled = true
-        useNewCruncher = false
-    }
-
+    compileSdkVersion rootProject.ext.COMPILE_SDK_VERSION
+    buildToolsVersion rootProject.ext.BUILDTOOLS_VERSION
+    //resourcePrefix 保证资源命名的唯一性,只能限定Xml资源,并不能限定图片资源
+    resourcePrefix "rxok_"
     defaultConfig {
-        minSdkVersion MIN_SDK as int
-        targetSdkVersion TARGET_SDK as int
-        versionCode rootProject.ext.version_const.versionCode
-        versionName rootProject.ext.version_const.versionName
+        minSdkVersion rootProject.ext.MIN_SDK_VERSION
+        targetSdkVersion rootProject.ext.TARGET_SDK_VERSION
+        versionCode libraryVersionCode
+        versionName libraryVersionName
 
-        testInstrumentationRunner rootProject.ext.dependencies.testInstrumentationRunner
-    }
-
-    compileOptions {
-        sourceCompatibility JavaVersion.VERSION_1_8
-        targetCompatibility JavaVersion.VERSION_1_8
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
 
     buildTypes {
-
         release {
             shrinkResources false
             minifyEnabled false
@@ -38,127 +26,49 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+
+    android.libraryVariants.all { variant ->
+        variant.outputs.all {
+            def fileName = "${moduleName}_v${libraryVersionName}_${variant.buildType.name}.aar"
+            outputFileName = fileName
+        }
+    }
+
+    aaptOptions {
+        cruncherEnabled = true
+        useNewCruncher = false
+    }
+
+    lintOptions {
+        abortOnError false
+    }
+
+    compileOptions {
+        sourceCompatibility rootProject.ext.JAVA_VERSION
+        targetCompatibility rootProject.ext.JAVA_VERSION
+    }
+
 }
 
 dependencies {
-    compile fileTree(dir: 'libs', include: ['*.jar'])
-    // android libs
-    /*androidTestCompile(rootProject.ext.dependencies.espresso_core, {
-        exclude group: rootProject.ext.testCompile.group, module: rootProject.ext.testCompile.module
-    })*/
-    compile rootProject.ext.dependencies.appcompatv7
-//    testCompile rootProject.ext.dependencies.junit
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
 
-    // dagger
-    apt rootProject.ext.dependencies.dagger_compiler
-    compile rootProject.ext.dependencies.dagger2
-    provided rootProject.ext.dependencies.jsr250_api
-    // RxJava
-    compile rootProject.ext.dependencies.rxjava
-    compile rootProject.ext.dependencies.rxandroid
-    // Retrofit2 - rxjava适配器
-    compile rootProject.ext.dependencies.adapter_rxjava
-    // Retrofit2 - gson转换器
-    compile rootProject.ext.dependencies.converter_gson
-    // 自定义OkHttp
-    compile(rootProject.ext.dependencies.retrofit) {
-        // exclude Retrofit’s OkHttp peer-dependency module and define your own module import
-        exclude module: 'okhttp'
-    }
-    compile rootProject.ext.dependencies.okhttp
-    compile rootProject.ext.dependencies.logging_interceptor
-}
+    compileOnly rootProject.ext.dependencies["appcompat_v7"]
 
-//项目主页
-def siteUrl = 'https://bintray.com/goghtsui/RxOkRetrofit'
-//项目的git地址
-def gitUrl = 'git@github.com:goghtsui/TvRecyclerView.git'
-// 上传到 Bintray 的 package 名称
-def libName = "RxOkRetrofit"
-// 这两个参数配置是为了最终生成 compile 'com.gogh:依赖库的名称:1.0.0'  group  version 是关键字，自动识别的
-group = "com.gogh";
-version = "1.0.03"
+    api rootProject.ext.dependencies["gson"]
+    api rootProject.ext.dependencies["rxjava2"]
+    api rootProject.ext.dependencies["rxandroid2"]
+    implementation rootProject.ext.dependencies["dagger2"]
+    annotationProcessor rootProject.ext.dependencies["dagger2_compiler"]
+    compileOnly rootProject.ext.dependencies["jsr250_api"]
+    implementation rootProject.ext.dependencies["okhttp3_okhttp"]
+    implementation rootProject.ext.dependencies["retrofit2"]
+    implementation rootProject.ext.dependencies["retrofit2_adapter_rxjava2"]
+    implementation rootProject.ext.dependencies["retrofit2_converter_gson"]
+    implementation rootProject.ext.dependencies["retrofit2_converter_scalars"]
+    implementation rootProject.ext.dependencies["okhttp3_logging_interceptor"]
 
-install {
-    repositories.mavenInstaller {
-        // 生成pom.xml和参数
-        pom {
-            project {
-                packaging 'aar'
-                // 可选，项目名称
-                name 'RxOkRetrofit'
-                // 可选，项目描述
-                description 'Support for http request, use okhttp rxjava and retrofit. Add log info module.'
-                url siteUrl // 项目主页，这里是引用上面定义好
-
-                // 软件开源协议，现在一般都是Apache License2.0吧，不需要修改
-                licenses {
-                    license {
-                        name 'The Apache Software License, Version 2.0'
-                        url 'http://www.apache.org/licenses/LICENSE-2.0.txt'
-                    }
-                }
-
-                //填写开发者基本信息，需要修改
-                developers {
-                    developer {
-                        id 'gaoxiaofeng' // 开发者的id
-                        name 'gaoxiaofeng' // 开发者名字
-                        email 'xiaofeng355@gmail.com' // 开发者邮箱
-                    }
-                }
-
-                // SCM，不需要修改
-                scm {
-                    connection gitUrl // Git仓库地址
-                    developerConnection gitUrl // Git仓库地址
-                    url siteUrl // 项目主页
-                }
-            }
-        }
-    }
-}
-
-//上传到JCenter
-Properties properties = new Properties()
-properties.load(project.rootProject.file('local.properties').newDataInputStream())
-
-bintray {
-    user = properties.getProperty("bintray.username")    // 读取 local.properties 文件里面的 bintray.user 登录用户名
-    key = properties.getProperty("bintray.apikey")   // 读取 local.properties 文件里面的 bintray.apikey
-    configurations = ['archives']
-    pkg {
-        //这里的repo值必须要和你创建Maven仓库的时候的名字一样
-        repo = "RxOkRetrofit"
-        //发布到JCenter上的项目名字
-        name = libName
-        websiteUrl = siteUrl
-        vcsUrl = gitUrl
-        licenses = ["Apache-2.0"]
-        publish = true //是否是公开项目
-    }
-}
-
-// 生成jar包的task，不需要修改
-task sourcesJar(type: Jar) {
-    from android.sourceSets.main.java.srcDirs
-    classifier = 'sources'
-}
-// 生成jarDoc的task，不需要修改
-task javadoc(type: Javadoc) {
-    options.encoding "UTF-8"
-    options.charSet 'UTF-8'
-    source = android.sourceSets.main.java.srcDirs
-    classpath += project.files(android.getBootClasspath().join(File.pathSeparator))
-    // destinationDir = file("../javadoc/")
-    failOnError false // 忽略注释语法错误，如果用jdk1.8你的注释写的不规范就编译不过
-}
-// 生成javaDoc的jar，不需要修改。
-task javadocJar(type: Jar, dependsOn: javadoc) {
-    classifier = 'javadoc'
-    from javadoc.destinationDir
-}
-artifacts {
-    archives javadocJar
-    archives sourcesJar
+    androidTestImplementation rootProject.ext.dependencies["runner"]
+    androidTestImplementation rootProject.ext.dependencies["espresso"]
+    testImplementation rootProject.ext.dependencies["junit"]
 }
