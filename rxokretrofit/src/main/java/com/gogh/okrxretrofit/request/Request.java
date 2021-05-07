@@ -1,10 +1,9 @@
 package com.gogh.okrxretrofit.request;
 
-import io.reactivex.Observable;
-import io.reactivex.Observer;
-import io.reactivex.android.schedulers.AndroidSchedulers;
-import io.reactivex.disposables.Disposable;
-import io.reactivex.schedulers.Schedulers;
+import rx.Observable;
+import rx.Subscriber;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.schedulers.Schedulers;
 
 /**
  * Copyright (c) 2017 All Rights reserved by gaoxiaofeng
@@ -24,11 +23,7 @@ public class Request<T> {
         observable
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Observer<T>() {
-                    @Override
-                    public void onSubscribe(Disposable d) {
-
-                    }
+                .subscribe(new Subscriber<T>() {
 
                     @Override
                     public void onNext(T t) {
@@ -38,16 +33,16 @@ public class Request<T> {
                     }
 
                     @Override
-                    public void onError(Throwable e) {
+                    public void onCompleted() {
                         if (onResponseListener != null) {
-                            onResponseListener.onError(e);
+                            onResponseListener.onCompleted();
                         }
                     }
 
                     @Override
-                    public void onComplete() {
+                    public void onError(Throwable e) {
                         if (onResponseListener != null) {
-                            onResponseListener.onCompleted();
+                            onResponseListener.onError(e);
                         }
                     }
                 });
