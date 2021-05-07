@@ -2,7 +2,8 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/TvRecyclerView.iml" filepath="$PROJECT_DIR$/TvRecyclerView.iml" />
+      <module fileurl="file://$PROJECT_DIR$/TvRecyclerView.iml" filepath="$PROJECT_DIR$/TvRecyclerView.iml" group="TvRecyclerView" />
+      <module fileurl="file://$PROJECT_DIR$/rxokretrofit/TvRecyclerView-rxokretrofit.iml" filepath="$PROJECT_DIR$/rxokretrofit/TvRecyclerView-rxokretrofit.iml" group="TvRecyclerView/rxokretrofit" />
       <module fileurl="file://$PROJECT_DIR$/rxokretrofit/rxokretrofit.iml" filepath="$PROJECT_DIR$/rxokretrofit/rxokretrofit.iml" />
     </modules>
   </component>

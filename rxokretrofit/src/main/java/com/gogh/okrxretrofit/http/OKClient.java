@@ -7,10 +7,12 @@ import com.gogh.okrxretrofit.conf.Property;
 import com.gogh.okrxretrofit.conf.TimeOut;
 import com.gogh.okrxretrofit.util.Logger;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
+import okhttp3.Interceptor;
 import okhttp3.Request;
 import okhttp3.Response;
 import okhttp3.logging.HttpLoggingInterceptor;
@@ -63,24 +65,26 @@ class OKClient {
 
         okhttp3.OkHttpClient.Builder httpClient = new okhttp3.OkHttpClient.Builder();
 
-        httpClient
-                .addInterceptor(chain -> {
+        httpClient.addInterceptor(new Interceptor() {
+            @Override
+            public Response intercept(Chain chain) throws IOException {
 
-                    Request original = chain.request();
-                    Request.Builder config = original.newBuilder();
+                Request original = chain.request();
+                Request.Builder config = original.newBuilder();
 
-                    if (null != properties) {
-                        for (Property property : properties) {
-                            config.addHeader(property.getKey(), property.getValue());
-                        }
+                if (null != properties) {
+                    for (Property property : properties) {
+                        config.addHeader(property.getKey(), property.getValue());
                     }
+                }
 
-                    Request request = config.method(original.method(), original.body())
-                            .build();
+                Request request = config.method(original.method(), original.body())
+                        .build();
 
-                    Response response = chain.proceed(request);
-                    return response;
-                })
+                Response response = chain.proceed(request);
+                return response;
+            }
+        })
                 .addInterceptor(loggingInterceptor)
                 .connectTimeout(timeOut.getConnectTimeout(), TimeUnit.SECONDS)
                 .writeTimeout(timeOut.getWriteTimeout(), TimeUnit.SECONDS)

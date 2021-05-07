@@ -1,8 +1,8 @@
 String moduleName = project.name
 apply plugin: 'com.android.library'
 ext{
-    libraryVersionCode = 6
-    libraryVersionName = "1.0.6"
+    libraryVersionCode = 7
+    libraryVersionName = "1.0.7"
 }
 android {
     compileSdkVersion rootProject.ext.COMPILE_SDK_VERSION

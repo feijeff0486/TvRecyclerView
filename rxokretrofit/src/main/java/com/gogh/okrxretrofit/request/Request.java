@@ -19,7 +19,7 @@ public class Request<T> {
         return SingleHolder.HOLDER;
     }
 
-    public void request(Observable<T> observable, OnResponseListener<T> onResponseListener) {
+    public void request(Observable<T> observable,final OnResponseListener<T> onResponseListener) {
         observable
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
