@@ -22,8 +22,6 @@ allprojects {
 2. Add the dependency
 ```groovy
 dependencies {
-    implementation 'com.github.feijeff0486:TvRecyclerView:cf9ea016d5'
-    //或
-    implementation 'com.github.feijeff0486:TvRecyclerView:master-SNAPSHOT'
+    implementation 'com.github.feijeff0486:TvRecyclerView:low-SNAPSHOT'
 }
 ```
