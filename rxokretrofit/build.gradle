@@ -1,8 +1,8 @@
 String moduleName = project.name
 apply plugin: 'com.android.library'
 ext{
-    libraryVersionCode = 5
-    libraryVersionName = "1.0.5"
+    libraryVersionCode = 6
+    libraryVersionName = "1.0.6"
 }
 android {
     compileSdkVersion rootProject.ext.COMPILE_SDK_VERSION
@@ -61,12 +61,12 @@ dependencies {
     implementation rootProject.ext.dependencies["dagger2"]
     annotationProcessor rootProject.ext.dependencies["dagger2_compiler"]
     compileOnly rootProject.ext.dependencies["jsr250_api"]
-    implementation rootProject.ext.dependencies["okhttp3_okhttp"]
-    implementation rootProject.ext.dependencies["retrofit2"]
-    implementation rootProject.ext.dependencies["retrofit2_adapter_rxjava2"]
-    implementation rootProject.ext.dependencies["retrofit2_converter_gson"]
-    implementation rootProject.ext.dependencies["retrofit2_converter_scalars"]
-    implementation rootProject.ext.dependencies["okhttp3_logging_interceptor"]
+    api rootProject.ext.dependencies["okhttp3_okhttp"]
+    api rootProject.ext.dependencies["retrofit2"]
+    api rootProject.ext.dependencies["retrofit2_adapter_rxjava2"]
+    api rootProject.ext.dependencies["retrofit2_converter_gson"]
+    api rootProject.ext.dependencies["retrofit2_converter_scalars"]
+    api rootProject.ext.dependencies["okhttp3_logging_interceptor"]
 
     androidTestImplementation rootProject.ext.dependencies["runner"]
     androidTestImplementation rootProject.ext.dependencies["espresso"]
